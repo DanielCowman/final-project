@@ -11,7 +11,7 @@ CURRENCY_TABLE = \
         "MXN": "Mexican peso", "MYR": "Malaysian ringgit", "NOK": "Norwegian krone", "NZD": "New Zealand dollar",
         "PHP": "Philippine peso", "PLN": "polish zloty", "RON": "Romanian new Leu", "RUB": "Russian ruble",
         "SEK": "Swedish krona", "SGD": "Singapore dollar", "THB": "Thai baht"
-    }
+}
 
 
 def print_startup():
@@ -38,11 +38,12 @@ def convert_currency():
     # pulls the data from fixer.io and returns it as a dictionary
     response = requests.request("GET", crafted_url).json()
     # find the sum of the money and the current rate of the currency
-    converted_total = int(float(amount_money) * float(response["rates"][currency_code_to]))
+    converted_total = round(float(amount_money) * float(response["rates"][currency_code_to]), 2)
+
 
     print("| FROM: "+ response["base"] + "(" + CURRENCY_TABLE[currency_code_from] + ") | " +
-          " TO: " + currency_code_to + "(" + CURRENCY_TABLE[currency_code_to] + ") |")
-    print("| DATE: " + response["date"] + "     |  AMOUNT TO CONVERT: " + amount_money + "    |")
+          " TO: " + currency_code_to + "(" + CURRENCY_TABLE[currency_code_to] + ")")
+    print("| DATE: " + response["date"] + "     |  AMOUNT TO CONVERT: " + amount_money)
     print("| CURRENT RATE: " + str(response["rates"][currency_code_to]) + " |")
 
-    print("You will receive: " + str(converted_total) + " " + CURRENCY_TABLE[currency_code_to])
+    print("You will receive: {} ".format(converted_total) + CURRENCY_TABLE[currency_code_to])
